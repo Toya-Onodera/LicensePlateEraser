@@ -120,14 +120,16 @@
                     const whiteEuclideanDistance = Math.hypot((rgba[0] - whiteRgb[0]), (rgba[1] - whiteRgb[1]), (rgba[2] - whiteRgb[2]));
                     const yellowEuclideanDistance = Math.hypot((rgba[0] - yellowRgb[0]), (rgba[1] - yellowRgb[1]), (rgba[2] - yellowRgb[2]));
 
+                    console.log([whiteEuclideanDistance, yellowEuclideanDistance]);
+
                     // 白に似ている場合
                     // しきい値は適当に設定しているので確認が必要かも
-                    if (whiteEuclideanDistance < yellowEuclideanDistance && whiteEuclideanDistance <= 70) {
+                    if (whiteEuclideanDistance < yellowEuclideanDistance && whiteEuclideanDistance <= 150) {
                         a.white.push(rgba);
                     }
 
                     // 黄色に似ている場合
-                    else if (yellowEuclideanDistance <= 70) {
+                    else if (yellowEuclideanDistance <= 150) {
                         a.yellow.push(rgba);
                     }
 
@@ -150,6 +152,8 @@
                 const color = (colorClassifiedArray.white.length > colorClassifiedArray.yellow.length)
                     ? licensePlateRgb(colorClassifiedArray.white)
                     : licensePlateRgb(colorClassifiedArray.yellow);
+
+                console.log(colorClassifiedArray);
 
                 ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
                 ctx.fillRect(plateStartX, plateStartY, plateWidth, plateHeight);
