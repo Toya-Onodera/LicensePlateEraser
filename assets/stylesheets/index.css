@@ -26,4 +26,6 @@ body {
     width: 100%;
     max-width: 1240px;
     padding: 16px;
+    justify-content: center;
+    align-items: center;
 }
