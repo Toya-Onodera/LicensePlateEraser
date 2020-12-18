@@ -104,7 +104,53 @@
                 const plateWidth = Math.round(canvas.width * localizedObjectAnnotations[licensePlateIndex]['boundingPoly']['normalizedVertices'][1]['x']) - Math.round(canvas.width * localizedObjectAnnotations[licensePlateIndex]['boundingPoly']['normalizedVertices'][0]['x']);
                 const plateHeight = Math.round(canvas.height * localizedObjectAnnotations[licensePlateIndex]['boundingPoly']['normalizedVertices'][3]['y']) - Math.round(canvas.height * localizedObjectAnnotations[licensePlateIndex]['boundingPoly']['normalizedVertices'][0]['y']);
 
-                ctx.fillStyle = 'rgb(255, 255, 255)';
+                // 色判定を行う
+                // 指定範囲内の色情報を抜き出す
+                const imageDataArray = ctx.getImageData(plateStartX, plateStartY, Math.round(plateWidth / 2), Math.round(plateHeight / 2)).data;
+                const imageDataRgbaArray = imageDataArray.reduce((a, c, i) => i % 4 ? a : [...a, imageDataArray.slice(i, i + 4)], []);
+                console.log(imageDataRgbaArray);
+
+                // 一般的に普通車のナンバーは白か黄色なのでそれを判別する
+                // ナンバーの半分で色は判別できそうなので範囲を狭くする
+                const colorClassifiedArray = imageDataRgbaArray.reduce((a, rgba) => {
+                    const whiteRgb = [255, 255, 255];
+                    const yellowRgb = [255, 255, 0];
+
+                    const whiteEuclideanDistance = Math.hypot((rgba[0] - whiteRgb[0]), (rgba[1] - whiteRgb[1]), (rgba[2] - whiteRgb[2]));
+                    const yellowEuclideanDistance = Math.hypot((rgba[0] - yellowRgb[0]), (rgba[1] - yellowRgb[1]), (rgba[2] - yellowRgb[2]));
+
+                    // 白に似ている場合
+                    // しきい値は適当に設定しているので確認が必要かも
+                    if (whiteEuclideanDistance < yellowEuclideanDistance && whiteEuclideanDistance <= 70) {
+                        a.white.push(rgba);
+                    }
+
+                    // 黄色に似ている場合
+                    else if (yellowEuclideanDistance <= 70) {
+                        a.yellow.push(rgba);
+                    }
+
+                    return a;
+                }, {
+                    white: [],
+                    yellow: []
+                });
+
+                // 色の平均を取る関数
+                const licensePlateRgb = (array) => {
+                    const r = Math.round(array.reduce((a, c) => a + c[0], 0) / array.length);
+                    const g = Math.round(array.reduce((a, c) => a + c[1], 0) / array.length);
+                    const b = Math.round(array.reduce((a, c) => a + c[2], 0) / array.length);
+
+                    return [r, g, b];
+                };
+
+                // 色の平均を取って自然なナンバー色にする
+                const color = (colorClassifiedArray.white.length > colorClassifiedArray.yellow.length)
+                    ? licensePlateRgb(colorClassifiedArray.white)
+                    : licensePlateRgb(colorClassifiedArray.yellow);
+
+                ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
                 ctx.fillRect(plateStartX, plateStartY, plateWidth, plateHeight);
             }
         }
