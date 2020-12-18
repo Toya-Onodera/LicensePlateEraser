@@ -44,6 +44,8 @@
                     h = h * scale;
                 }
 
+                // 画面サイズに合わせて表示する
+                // TODO: 解像度が落ちてしまうので対処法を考える
                 canvas.width = w;
                 canvas.height = h;
                 ctx.drawImage(image, 0, 0, w, h);
@@ -108,7 +110,6 @@
                 // 指定範囲内の色情報を抜き出す
                 const imageDataArray = ctx.getImageData(plateStartX, plateStartY, Math.round(plateWidth / 2), Math.round(plateHeight / 2)).data;
                 const imageDataRgbaArray = imageDataArray.reduce((a, c, i) => i % 4 ? a : [...a, imageDataArray.slice(i, i + 4)], []);
-                console.log(imageDataRgbaArray);
 
                 // 一般的に普通車のナンバーは白か黄色なのでそれを判別する
                 // ナンバーの半分で色は判別できそうなので範囲を狭くする
@@ -152,6 +153,25 @@
 
                 ctx.fillStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
                 ctx.fillRect(plateStartX, plateStartY, plateWidth, plateHeight);
+
+                // 自動ダウンロードされるようにする
+                const link = document.createElement("a");
+
+                if (link.download !== undefined) {
+                    const downloadBase64Image = canvas.toDataURL('image/png');
+                    const fileName = `${new Date().toDateString().replace(/\\s+/g, "")}_${Math.round(Math.random() * 1000000000)}.png`;
+                    link.setAttribute("href", downloadBase64Image);
+                    link.setAttribute("download", fileName);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            }
+
+            // ナンバーが検出できなかったので通知する
+            else {
+                alert('ナンバーが検出出来ませんでした…');
             }
         }
     });
