@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40b49988-649c-445f-9ed9-d6f90803cd5f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/javascripts/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/stylesheets/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/LicensePlateEraser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LicensePlateEraser.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +54,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1608265564525</updated>
-      <workItem from="1608265567252" duration="451000" />
+      <workItem from="1608265567252" duration="873000" />
     </task>
     <servers />
   </component>

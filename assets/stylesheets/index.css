@@ -1,1 +1,20 @@
 @charset "UTF-8";
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    height: 100%;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.file-field-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 360px;
+    padding: 16px;
+}

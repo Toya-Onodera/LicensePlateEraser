@@ -6,12 +6,27 @@
     <title>License Plate Eraser</title>
 
     <!-- StyleSheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="./assets/stylesheets/index.css">
 
     <!-- JavaScripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="./assets/javascripts/main.js" defer></script>
 </head>
 <body>
+<div class="file-field-wrapper">
+    <div class="file-field input-field">
+        <div class="btn">
+            <span>File</span>
 
+            <!-- Google Cloud Vision API だと JPEG、PNG、WebP に対応している -->
+            <!-- 今回はすべてのブラウザでサポートしている JPEG と PNG を使用する -->
+            <input type="file" id="input-image" accept="image/jpeg,image/png">
+        </div>
+        <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+        </div>
+    </div>
+</div>
 </body>
 </html>
