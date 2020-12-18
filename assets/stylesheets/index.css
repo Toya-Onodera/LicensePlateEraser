@@ -8,13 +8,22 @@ body {
     display: flex;
     height: 100%;
     width: 100vw;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.file-field-wrapper {
+#file-field-wrapper {
     box-sizing: border-box;
     width: 100%;
     max-width: 360px;
+    padding: 16px;
+}
+
+#canvas-field-wrapper {
+    display: none;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1240px;
     padding: 16px;
 }
